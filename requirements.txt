@@ -1,0 +1,6 @@
+pandas
+sqlalchemy
+flask== 2.2.1
+flask_sqlalchemy==3.0
+pytest
+flask_json_schema
