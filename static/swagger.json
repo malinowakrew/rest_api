@@ -1,0 +1,248 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Edyta Mróz Application for cisco recruitment",
+    "title": "CRUD application",
+    "contact": {
+      "email": "ed.mroz.11@gmail.com"
+    },
+    "version": "1.0"
+  },
+  "definitions": {
+    "delete-account-response": {
+      "type": "object",
+      "required": [
+        "account-created",
+        "description",
+        "error"
+      ],
+      "properties": {
+        "account-creates": {
+          "type": "boolean",
+          "format": "boolean",
+          "example": false
+        },
+        "description": {
+          "type": "string",
+          "example": "User name not unique"
+        },
+        "error": {
+          "type": "string",
+          "example": "Error string"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Ticket",
+      "description": "CRUD"
+    }
+  ],
+  "basePath": "/ticket",
+  "paths": {
+    "/addition": {
+      "post": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Add a ticket to database. Status for new ticket is always new. Ticket id is not returned",
+        "parameters": [
+          {
+            "name": "JSON body",
+            "in": "body",
+            "schema": {
+              "required": true,
+              "description": "Ticket params",
+              "example": {
+                "title": "Something is not working",
+                "description": "I have no idea what is happening",
+                "severity": "high"
+              },
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Issue title"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description for the issue"
+                },
+                "severity": {
+                  "type": "string",
+                  "description": "How important is this issue. Level to choose: low, medium, high"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket successfully added to database",
+            "schema": {
+              "example": {
+                "Ok": {
+                  "title": "Something is not working",
+                  "description": "I have no idea what is happening",
+                  "severity": "high",
+                  "status": "new"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Json body of request against schema"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Read all tickets from database",
+        "responses": {
+          "200": {
+            "description": "All ticket all returned. There is no implemented of any detailed search. Ticket id is returned.",
+            "schema": {
+              "example": {
+                "Ok": {
+                  "description": "I have no idea what is happening",
+                  "severity": "high",
+                  "status": "new",
+                  "ticket_id": 24,
+                  "title": "Something is not working"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Json body of request against schema"
+          }
+        }
+      }
+    },
+    "/deleting": {
+      "delete": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Delete ticket depend on its id.",
+        "parameters": [
+          {
+            "name": "JSON body",
+            "in": "body",
+            "schema": {
+              "required": true,
+              "description": "Ticket id params",
+              "example": {
+                "ticket_id": 24
+              },
+              "properties": {
+                "ticked_id": {
+                  "type": "integer",
+                  "description": "Id of ticket which should be deleted."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket successfully deleted",
+            "schema": {
+              "example": {
+                "Ok": {
+                  "description": "I have no idea what is happening",
+                  "severity": "high",
+                  "status": "new",
+                  "ticket_id": 24,
+                  "title": "Something is not working"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Json body of request against schema"
+          }
+        }
+      }
+    },
+    "/status/change": {
+      "post": {
+        "tags": [
+          "Ticket"
+        ],
+        "summary": "Change status of a ticket",
+        "parameters": [
+          {
+            "name": "JSON body",
+            "in": "body",
+            "schema": {
+              "required": true,
+              "description": "Ticket params",
+              "example": {
+                "ticket_id": 2,
+                "status": "done"
+              },
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "Issue title"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Could be one from: new, in progress, done."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket successfully change in database",
+            "schema": {
+              "example": {
+                "Ok": {
+                  "description": "blabla",
+                  "severity": "high",
+                  "status": "new",
+                  "ticket_id": 2,
+                  "title": "nic2"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Json body of request against schema"
+          }
+        }
+      }
+    }
+  }
+}
